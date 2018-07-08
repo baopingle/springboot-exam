@@ -1,0 +1,46 @@
+# user information
+user:
+  usrId: DEV-PC
+  password: 8ik,(OL>
+  age: 39
+  sex: Male
+
+# server information
+server:
+  ip: 192.168.100.106
+  name: BRIAN-PCHOME
+
+# logging information
+logging:
+  path: /user/local/log
+  level:
+    com:
+      brian:
+        springboot: INFO
+    org:
+      hibernate: ERROR
+
+spring:
+  # redis
+  redis:
+    database: 0
+    host: 192.168.100.106
+    port: 6379
+    password:
+    timeout: 5000
+    # jedis client
+    jedis:
+      pool:
+        max-wait: -1ms
+        min-idle: 0
+        max-idle: 8
+        max-active: 8
+    # lettuce client
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-wait: -1ms
+        max-total: 8
+      shutdown-timeout: 100ms
+
