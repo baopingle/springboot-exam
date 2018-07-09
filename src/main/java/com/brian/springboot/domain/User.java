@@ -1,5 +1,7 @@
 package com.brian.springboot.domain;
 
+import com.brian.springboot.util.GenderAttributeCOnverter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -18,13 +20,14 @@ public class User implements Serializable{
     @Column(name = "LAST_NAME", nullable = false)
     private String lastName;
 
-    @Column(name = "LOGIN_NAME", nullable = false)
+    @Column(name = "LOGIN_NAME", nullable = false, unique=true)
     private String loginName;
 
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
     @Column(name = "GENDER", nullable = false)
+    @Convert(converter= GenderAttributeCOnverter.class )
     private Gender gender;
 
     @Column(name = "BIRTH_DATE")

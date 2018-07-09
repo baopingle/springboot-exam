@@ -20,7 +20,7 @@ public class UserController {
         return userService.findUser(loginName);
     }
 
-    @RequestMapping(path="create/{loginName}", method= RequestMethod.POST)
+    @RequestMapping(path="create/{loginName}", method= RequestMethod.GET)
     public User createUser(@PathVariable("loginName") String loginName){
         return userService.createUser(loginName);
     }

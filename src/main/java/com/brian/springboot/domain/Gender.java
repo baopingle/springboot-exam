@@ -1,5 +1,7 @@
 package com.brian.springboot.domain;
 
+import org.springframework.util.StringUtils;
+
 import javax.validation.constraints.NotNull;
 
 public enum Gender {
@@ -25,6 +27,6 @@ public enum Gender {
     }
 
     public static Gender toGender(String name){
-        return valueOf(name);
+        return StringUtils.isEmpty(name)?Gender.Unknown:valueOf(name);
     }
 }
