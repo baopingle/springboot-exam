@@ -5,6 +5,7 @@ import com.brian.springboot.domain.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @SpringBootTest
@@ -26,12 +30,19 @@ public class HelloControllerTest extends AbstractControllerTest{
     @Autowired
     private HelloController helloController;
 
+    private static DateTimeFormatter df;
+
+    @BeforeClass
+    public static void beforeConstruct(){
+        df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    }
+
     @Before
     public void init(){
         mockUser = new User();
-        mockUser.setSex(Gender.Male);
-        mockUser.setAge(39);
-        mockUser.setName("DEV-PC");
+        mockUser.setGender(Gender.Male);
+        mockUser.setBirthDate(LocalDateTime.parse("1980-12-14 00:00:00", df));
+        mockUser.setLoginName("DEV-PC");
         mockUser.setPassword("8ik,(OL>");
     }
 
@@ -44,7 +55,7 @@ public class HelloControllerTest extends AbstractControllerTest{
                 .accept(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("DEV-PC"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.loginName").value("DEV-PC"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
     }
@@ -59,7 +70,7 @@ public class HelloControllerTest extends AbstractControllerTest{
     }
 
     @Override
-    protected HelloController getContoller() {
+    protected HelloController getController() {
         return helloController;
     }
 }

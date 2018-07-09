@@ -2,7 +2,7 @@
 user:
   usrId: DEV-PC
   password: 8ik,(OL>
-  age: 39
+  birthdate: 1980-12-14 00:00:00
   sex: Male
 
 # server information
@@ -24,10 +24,10 @@ spring:
   # redis
   redis:
     database: 0
-    host: 192.168.100.106
+    host: 127.0.0.1
     port: 6379
     password:
-    timeout: 5000
+    timeout: 5000ms
     # jedis client
     jedis:
       pool:
@@ -41,6 +41,21 @@ spring:
         min-idle: 0
         max-idle: 8
         max-wait: -1ms
-        max-total: 8
+        max-active: 8
       shutdown-timeout: 100ms
+
+  # database & jpa setup
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/my_demo
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+
 

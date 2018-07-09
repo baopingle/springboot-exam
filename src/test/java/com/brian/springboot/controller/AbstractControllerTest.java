@@ -1,8 +1,7 @@
 package com.brian.springboot.controller;
 
-import com.brian.springboot.SpringbootApplication;
+import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -11,8 +10,13 @@ public abstract class AbstractControllerTest<T> {
 
     @Before
     public void setup(){
-        mvc = MockMvcBuilders.standaloneSetup(getContoller()).build();
+        mvc = MockMvcBuilders.standaloneSetup(getController()).build();
     }
 
-    protected abstract T getContoller();
+    protected abstract T getController();
+
+    @After
+    public void cleanUp(){
+
+    }
 }
