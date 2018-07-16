@@ -46,7 +46,7 @@ spring:
 
   # database & jpa setup
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/my_demo
+    url: jdbc:mysql://127.0.0.1:3306/my_demo?characterEncoding=utf8&useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
@@ -57,5 +57,9 @@ spring:
           auto: update
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/test
 
 
