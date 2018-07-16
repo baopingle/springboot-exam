@@ -2,7 +2,7 @@
 This is my spring-boot demo and some simple exercises.
 
 ## FAQ
-* Navicat连接mysql报错1251解决方案 &lt;br&gt;
+* Navicat连接mysql报错1251解决方案
         1. cmd进入mysql的账户
         ```powershell
         c:\windows\system32> mysql -uroot -p
@@ -20,6 +20,8 @@ This is my spring-boot demo and some simple exercises.
         ```powershell
         FLUSH PRIVILEGES;
         ```
+* Redis windows install
+        https://github.com/MicrosoftArchive/redis/releases
 
 # Reference
 https://blog.csdn.net/softwave/article/details/77152373
