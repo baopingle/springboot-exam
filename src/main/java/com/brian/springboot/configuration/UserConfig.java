@@ -1,4 +1,4 @@
-package com.brian.springboot.component;
+package com.brian.springboot.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

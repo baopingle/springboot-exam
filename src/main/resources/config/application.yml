@@ -20,6 +20,7 @@ logging:
     org:
       hibernate: ERROR
 
+# Spring configurations
 spring:
   # redis
   redis:
@@ -58,8 +59,17 @@ spring:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
 
+  # mongodb
   data:
     mongodb:
       uri: mongodb://localhost:27017/test
 
+  # rabbitmq
+  application:
+    name: spring-boot-rabbitmq
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
 

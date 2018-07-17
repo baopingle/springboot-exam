@@ -1,6 +1,6 @@
 package com.brian.springboot.controller;
 
-import com.brian.springboot.component.UserConfig;
+import com.brian.springboot.configuration.UserConfig;
 import com.brian.springboot.domain.Gender;
 import com.brian.springboot.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
