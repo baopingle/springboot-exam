@@ -88,4 +88,12 @@ public class User implements Serializable{
     public void setBirthDate(LocalDateTime birthDate) {
         this.birthDate = birthDate;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(User.class.getSimpleName());
+        sb.append("{loginName=").append(this.loginName).append("}");
+        return sb.toString();
+    }
 }

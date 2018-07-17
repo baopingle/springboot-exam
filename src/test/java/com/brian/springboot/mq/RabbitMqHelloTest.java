@@ -1,5 +1,6 @@
-package com.brian.springboot.service;
+package com.brian.springboot.mq;
 
+import com.brian.springboot.domain.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,21 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringBootTest
 public class RabbitMqHelloTest {
     @Autowired
-    private HelloSender sender;
+    private MqSender sender;
 
     @Test
     public void hello(){
-        sender.send();
+        for(int i=0;i<100;i++){
+            sender.send(i);
+        }
+
+    }
+
+    @Test
+    public void user(){
+        User user = new User();
+        user.setId(1l);
+        user.setLoginName("Brian2");
+        sender.send(user);
     }
 }

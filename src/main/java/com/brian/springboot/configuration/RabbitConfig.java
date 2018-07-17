@@ -8,9 +8,15 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitConfig {
 
     public static final String QUEUE_HELLO = "hello";
+    public static final String QUEUE_USER = "user";
 
-    @Bean
-    public Queue queue(){
+    @Bean(name = QUEUE_HELLO)
+    public Queue helloQueue(){
         return new Queue(QUEUE_HELLO);
+    }
+
+    @Bean(name = QUEUE_USER)
+    public Queue userQueue(){
+        return new Queue(QUEUE_USER);
     }
 }
