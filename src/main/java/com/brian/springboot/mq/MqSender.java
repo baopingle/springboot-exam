@@ -23,4 +23,16 @@ public class MqSender {
     public void send(User user){
         rabbitTemplate.convertAndSend(RabbitConfig.QUEUE_USER,user);
     }
+
+    public void sendMessage1(){
+        String content = "hi, i am message 1";
+        System.out.println("Sender: "+content);
+        rabbitTemplate.convertAndSend(RabbitConfig.TOPIC_EXCHANGE,RabbitConfig.TOPIC_ROUTING_MESSAGE,content);
+    }
+
+    public void sendMessage2(){
+        String content = "hi, i am message 2";
+        System.out.println("Sender: "+content);
+        rabbitTemplate.convertAndSend(RabbitConfig.TOPIC_EXCHANGE,RabbitConfig.TOPIC_ROUTING_MESSAGES,content);
+    }
 }
