@@ -1,18 +1,23 @@
 package com.brian.springboot.mq.sender;
 
-import com.brian.springboot.configuration.FanoutRabbitConfig;
 import com.brian.springboot.configuration.RabbitConfig;
 import com.brian.springboot.domain.User;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.core.CorrelationDataPostProcessor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class MqSender {
 
     @Autowired
+    @Qualifier("ackAmqpTemplate")
     private AmqpTemplate rabbitTemplate;
 
     public void send(int count){
@@ -40,6 +45,10 @@ public class MqSender {
     public void sendFanoutMessage(){
         String content = "hi, fanout message!";
         System.out.println("Sender: "+content);
-        rabbitTemplate.convertAndSend(FanoutRabbitConfig.FANOUT_EXCHANGE,"", content);
+        final CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
+        rabbitTemplate.convertAndSend(RabbitConfig.FANOUT_EXCHANGE,"", content,
+                (message)->{
+                    message.getMessageProperties().setCorrelationId(correlationData.getId());return message;
+                });
     }
 }

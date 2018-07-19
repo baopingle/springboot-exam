@@ -10,12 +10,8 @@ import org.springframework.stereotype.Component;
 public class HelloReceiver {
 
     @RabbitHandler
-    public void process1(String content){
-        System.out.println("Receiver 1: "+content);
+    public void process(String content){
+        System.out.println("Receiver : "+content);
     }
 
-    @RabbitHandler
-    public void process2(String msgContent){
-        System.out.println("Receiver 2: "+msgContent);
-    }
 }
