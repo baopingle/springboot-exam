@@ -12,12 +12,10 @@ public class RabbitConfig {
 
     public static final String QUEUE_HELLO = "hello";
     public static final String QUEUE_USER = "user";
-    public static final String TOPIC_MESSAGE = "topic_message";
-    public static final String TOPIC_MESSAGES = "topic_messages";
     public static final String TOPIC_EXCHANGE = "exchange";
-    public static final String TOPIC_ROUTING_MESSAGE="topic.message";
+    public static final String TOPIC_QUEUE_ROUTING_MESSAGE ="topic.message";
     public static final String TOPIC_ROUTING_MESSAGES="topic.messages";
-    public static final String TOPIC_ROUTING_MESSAGE_PATTERN="topic.#";
+    public static final String TOPIC_QUEUE_MESSAGE_PATTERN ="topic.#";
 
 
     @Bean(name = QUEUE_HELLO)
@@ -32,12 +30,12 @@ public class RabbitConfig {
 
     @Bean
     public Queue topicMessage(){
-        return new Queue(TOPIC_MESSAGE);
+        return new Queue(TOPIC_QUEUE_ROUTING_MESSAGE);
     }
 
     @Bean
     public Queue topicMessages(){
-        return new Queue(TOPIC_MESSAGES);
+        return new Queue(TOPIC_QUEUE_MESSAGE_PATTERN);
     }
 
     @Bean
@@ -47,11 +45,11 @@ public class RabbitConfig {
 
     @Bean
     Binding bindingExchangeMessage(Queue topicMessage, TopicExchange exchange){
-        return BindingBuilder.bind(topicMessage).to(exchange).with(TOPIC_ROUTING_MESSAGE);
+        return BindingBuilder.bind(topicMessage).to(exchange).with(TOPIC_QUEUE_ROUTING_MESSAGE);
     }
 
     @Bean
     Binding bindingExchangeMessages(Queue topicMessages, TopicExchange exchange){
-        return BindingBuilder.bind(topicMessages).to(exchange).with(TOPIC_ROUTING_MESSAGE_PATTERN);
+        return BindingBuilder.bind(topicMessages).to(exchange).with(TOPIC_QUEUE_MESSAGE_PATTERN);
     }
 }

@@ -1,5 +1,6 @@
-package com.brian.springboot.mq;
+package com.brian.springboot.mq.sender;
 
+import com.brian.springboot.configuration.FanoutRabbitConfig;
 import com.brian.springboot.configuration.RabbitConfig;
 import com.brian.springboot.domain.User;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -27,12 +28,18 @@ public class MqSender {
     public void sendMessage1(){
         String content = "hi, i am message 1";
         System.out.println("Sender: "+content);
-        rabbitTemplate.convertAndSend(RabbitConfig.TOPIC_EXCHANGE,RabbitConfig.TOPIC_ROUTING_MESSAGE,content);
+        rabbitTemplate.convertAndSend(RabbitConfig.TOPIC_EXCHANGE,RabbitConfig.TOPIC_QUEUE_ROUTING_MESSAGE,content);
     }
 
     public void sendMessage2(){
         String content = "hi, i am message 2";
         System.out.println("Sender: "+content);
         rabbitTemplate.convertAndSend(RabbitConfig.TOPIC_EXCHANGE,RabbitConfig.TOPIC_ROUTING_MESSAGES,content);
+    }
+
+    public void sendFanoutMessage(){
+        String content = "hi, fanout message!";
+        System.out.println("Sender: "+content);
+        rabbitTemplate.convertAndSend(FanoutRabbitConfig.FANOUT_EXCHANGE,"", content);
     }
 }

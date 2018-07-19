@@ -72,4 +72,13 @@ spring:
     port: 5672
     username: admin
     password: admin
+    publisher-confirms: true
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+        concurrency: 2
+        max-concurrency: 3
+        retry:
+          enabled: true
 
