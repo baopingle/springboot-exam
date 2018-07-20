@@ -1,12 +1,15 @@
 package com.brian.springboot.configuration;
 
+import com.brian.springboot.mq.receiver.FanoutReceiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +36,10 @@ public class RabbitConfig {
     @Resource
     private RabbitTemplate rabbitTemplate;
 
-    @Bean(name="ackAmqpTemplate")
+    @Autowired
+    private FanoutReceiver receiver;
+
+    @Bean
     public AmqpTemplate amqpTemplate(){
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
         rabbitTemplate.setEncoding("UTF-8");
@@ -45,7 +51,7 @@ public class RabbitConfig {
         });
         rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
             if (ack){
-                log.info("message send to exchange successfully, id: {}",correlationData==null?null:correlationData.getId());
+                log.info("message send to exchange successfully, id: {}",correlationData.getId());
             }else{
                 log.info("message send to exchange failed, caused by {}",cause);
             }
@@ -59,6 +65,16 @@ public class RabbitConfig {
         factory.setConnectionFactory(conectionFactory);
         factory.setMessageConverter(new Jackson2JsonMessageConverter());
         return factory;
+    }
+
+    @Bean
+    public SimpleMessageListenerContainer messageListenerContainer(ConnectionFactory connectionFactory){
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        container.addQueueNames(FANOUT_QUEUE_A,FANOUT_QUEUE_B,FANOUT_QUEUE_C);
+        container.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        container.setMessageListener(receiver);
+        return container;
     }
 
     @Bean(name = QUEUE_HELLO)

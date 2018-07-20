@@ -18,18 +18,18 @@ public class FanoutMsgReceiver {
     @RabbitListener(queues = RabbitConfig.FANOUT_QUEUE_A)
     public void process1(Message message, Channel channel) throws IOException{
         log.info("Fanout Receiver 1: {}", message.toString());
-        channel.basicAck(message.getMessageProperties().getDeliveryTag(),true);
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
     }
 
     @RabbitListener(queues = RabbitConfig.FANOUT_QUEUE_B)
     public void process2(Message message, Channel channel) throws IOException{
         log.info("Fanout Receiver 2: {}",message.toString());
-        channel.basicAck(message.getMessageProperties().getDeliveryTag(),true);
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
     }
 
     @RabbitListener(queues = RabbitConfig.FANOUT_QUEUE_C)
     public void process3(Message message, Channel channel) throws IOException{
         log.info("Fanout Receiver 3: {}",message.toString());
-        channel.basicAck(message.getMessageProperties().getDeliveryTag(),true);
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
     }
 }

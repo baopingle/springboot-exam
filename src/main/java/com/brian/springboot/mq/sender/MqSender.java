@@ -17,8 +17,7 @@ import java.util.UUID;
 public class MqSender {
 
     @Autowired
-    @Qualifier("ackAmqpTemplate")
-    private AmqpTemplate rabbitTemplate;
+    private RabbitTemplate rabbitTemplate;
 
     public void send(int count){
         String content = "Hello " + new Date() + "******"+count;
@@ -46,9 +45,6 @@ public class MqSender {
         String content = "hi, fanout message!";
         System.out.println("Sender: "+content);
         final CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
-        rabbitTemplate.convertAndSend(RabbitConfig.FANOUT_EXCHANGE,"", content,
-                (message)->{
-                    message.getMessageProperties().setCorrelationId(correlationData.getId());return message;
-                });
+        rabbitTemplate.convertAndSend(RabbitConfig.FANOUT_EXCHANGE,"", content, correlationData);
     }
 }
