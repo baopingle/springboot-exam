@@ -2,12 +2,9 @@ package com.brian.springboot.mq.sender;
 
 import com.brian.springboot.configuration.RabbitConfig;
 import com.brian.springboot.domain.User;
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.rabbit.core.CorrelationDataPostProcessor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
